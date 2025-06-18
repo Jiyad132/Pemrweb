@@ -1,17 +1,28 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 px-2">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("products") }}
-                </div>
+            <div class="mt-6 item-center justfy-between">
+                <h2 class="font-semibold text-xl">Daftar Produk</h2>
+                <button class="bg-grey-100 px-10 py-2 rounded-md font-semibold">Tambah</button>
             </div>
+
+            <div class="grid grid-cols-3 mt-4">
+                 @foreach ($products as $product)
+                    <div>
+                         <img src="{{ url('storage/' . $product->foto) }}" />
+                         <div class="my-2">
+                            <p class="mt-2 text-xl font-light">{{ $product->nama }}</p>
+                            <p class="font-semi bold text-gray-400">Rp {{number_format ($product->harga) }}</p>
+                         </div>
+                         <button class="bg-grey-100 px-10 py-2 w-full rounded-md font-semibold">edit</button>
+                    </div>
+                 @endforeach
         </div>
-    </div>
+
+        <div class="mt-4">
+            {{ $products->links() }}
+        </div>
+
+        </div>
 </x-app-layout>
+
