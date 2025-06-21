@@ -3,7 +3,10 @@
 
             <div class="mt-6 item-center justfy-between">
                 <h2 class="font-semibold text-xl">Daftar Produk</h2>
+                <a href="{{ route('products.create') }}">
                 <button class="bg-grey-100 px-10 py-2 rounded-md font-semibold">Tambah</button>
+                </a>
+                
             </div>
 
             <div class="grid grid-cols-3 mt-4">
