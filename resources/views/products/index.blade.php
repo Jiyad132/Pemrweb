@@ -1,6 +1,8 @@
 <x-app-layout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 px-2">
 
+        <x-alert />
+
             <div class="mt-6 item-center justfy-between">
                 <h2 class="font-semibold text-xl">Daftar Produk</h2>
                 <a href="{{ route('products.create') }}">
