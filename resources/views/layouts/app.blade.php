@@ -21,7 +21,7 @@
             @include('layouts.navigation')
 
             <div class="flex justify-center mt -10">
-                <img src="{{ url('logo.png')}}" class="h-14"/>
+                <img src="{{ url('image.png')}}" class="h-20"/>
             </div>
             <!-- Page Content -->
             <main>

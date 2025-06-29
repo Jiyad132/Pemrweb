@@ -46,6 +46,14 @@
                     <x-primary-button class="justify-center w-full mt-4">
                         {{ __('Submit') }}
                     </x-primary-button>
+
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">
+                        Hapus Produk
+                    </button>
+                    </form>
                 </div>
 
             </form>

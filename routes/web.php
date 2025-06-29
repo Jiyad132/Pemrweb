@@ -19,6 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::POST('products', [ProductController::class, 'store'])->name('products.store');
     Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::resource('products', ProductController::class);
+    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
 
 
 
