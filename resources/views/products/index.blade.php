@@ -1,7 +1,9 @@
 <x-app-layout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 px-2">
 
-        <x-alert />
+        @if (session()->has('success'))
+        <x-alert message="{{session('success')}}" />
+        @endif
 
             <div class="mt-6 item-center justfy-between">
                 <h2 class="font-semibold text-xl">Daftar Produk</h2>
@@ -19,7 +21,9 @@
                             <p class="mt-2 text-xl font-light">{{ $product->nama }}</p>
                             <p class="font-semi bold text-gray-400">Rp {{number_format ($product->harga) }}</p>
                          </div>
+                        <a href="{{ route('products.edit', $product) }}">
                          <button class="bg-grey-100 px-10 py-2 w-full rounded-md font-semibold">edit</button>
+                        </a>
                     </div>
                  @endforeach
         </div>

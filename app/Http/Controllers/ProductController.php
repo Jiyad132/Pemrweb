@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
     public function index()
     {
-       $products = Product::paginate(1);
+        $products = Product::paginate(12);
 
-    return view('products.index', compact('products'));
-
-
+        return view('products.index', compact('products'));
     }
 
     public function create()
@@ -22,22 +22,50 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-         $validated = $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric'
-        ]);
+{
+    $validated = $request->validate([
+        'nama' => 'required',
+        'harga' => 'required|numeric',
+        'foto' => 'required|image|mimes:jpeg,png,jpg'
+    ]);
 
-            Product::create([
-                'nama'=>$request->nama,
-                'harga'=>$request->harga,
-                'deskripsi'=>$request->deskripsi
-             ]);
+    $foto = $request->file('foto');
+    $foto->storeAs('public/images', $foto->hashName());
 
-             return redirect()->route('products.index')->with('succes','produk berhasil ditambahkan');
+    Product::create([
+        'nama' => $request->nama,
+        'harga' => str_replace(".", "", $request->harga),
+        'deskripsi' => $request->deskripsi,
+        'foto' => 'images/' . $foto->hashName(),
+    ]);
 
+    return redirect()->route('products.index')->with('success', 'Produk Berhasil Ditambahkan');
     }
 
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
 
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+        'nama' => 'required',
+        'harga' => 'required|numeric'
+    ]);
 
+    $product-> nama= $request-> nama;
+    $product-> harga= str_replace(".", "", $request->harga);
+    $product-> deskripsi= $request-> deskripsi;
+
+    if($request->file('foto')) {
+        Storage::disk('local')->delete('public/', $product->foto);
+        $foto = $request->file('foto');
+        $foto->storeAs('public/images', $foto->hashName());
+        $product->foto = $foto->hashName();
+    }
+
+    $product->update();
+    return redirect()->route('products.index')->with('success', 'Produk Berhasil Diupdate');
+    }
 }
